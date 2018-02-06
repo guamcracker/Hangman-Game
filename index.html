@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  body {
+      width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      font-size: 40px;
+  }
+  #stickman {
+      background-image: url('assets/images/man.png');
+      background-repeat: no-repeat;
+      height: 400px;
+      width: 75px;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      left: -150px;
+      position: relative;
+      zoom: 1;
+  }
+  #stickman-pole {
+      background-image: url('assets/images/HM_back.gif');
+      background-repeat: no-repeat;
+      height: 400px;
+      width: 400px;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      zoom: 2.5;
+      z-index: -99;
+      position: relative;
+      left: 100px;
+  }
+</style>
+<body>
+  <!-- Where my dashes are on my page -->
+  <h1 id="myWord"></h1>
 
+  <h1 id="score"></h1>
+  <div id="stickman-pole">
+        <div id="stickman"></div>
+  </div>
+
+
+
+    <script>
+        // array of words
+    var wordArr = ["html", "attributes", "elements", "properties", "font-family", "loops", "arrays", "booleans", "console.log", "functions"]
+    
+    // generates a random word from array
+    var winningWord = wordArr[Math.floor(Math.random() *wordArr.length)]
+    console.log(winningWord)
+
+    var stickman = document.getElementById("stickman")
+    var stickmanBackgroundPositionX = 0
+
+    // initialize dashes
+    var dashes = ""
+
+    // grabs h1 tag
+    var wordSpot = document.getElementById("myWord")
+    var gameScore = document.getElementById("score")
+
+    // puts number of dashes equivalent to length of word
+    for(var i = 0; i < winningWord.length; i++) {
+        dashes += "-"
+    }
+
+    // add dashes to the h1 tag
+    wordSpot.innerHTML = dashes
+    var guessCounter = 0
+
+    console.log("guessess equals " + guessCounter)
+
+    var stickManFigures = [
+        "O",
+        "O "
+    ]
+
+    // handle keyboard events
+    document.onkeyup = function(event) {
+
+        console.log(guessCounter)
+        // represent key pressed
+        var chosenLetter = event.key
+
+        // bad guess - we are only counting bad guesses
+        // if the chosen letter is NOT inside the winning word
+        if(winningWord.indexOf(chosenLetter) == -1) {
+            // incrementing guessCounter by 1
+            guessCounter++
+            stickmanBackgroundPositionX = stickmanBackgroundPositionX - 75
+            stickman.style.backgroundPositionX = stickmanBackgroundPositionX + "px";
+        }
+
+        // loop through random word
+        for(var i = 0; i < winningWord.length; i++) {
+        // conditional for if letter is in word
+            var thisLetter = winningWord[i]
+
+
+
+            if (guessCounter == 6)  {
+              gameScore.innerText = "You Loose!"
+            }
+            // if chosenLetter is a letter inside the winner word
+            else if(chosenLetter === thisLetter) {
+                // Grabbing the letters and dashes
+                // e.g. if current word is "Apple"
+                // and person already guessed "A"
+                // this will equal "A----"
+                wordSpotInnerText = wordSpot.innerText
+                // This is splitting the current letters and dashes
+                // into an array. So in the above example this will 
+                // equal ['A', '-', '-', '-', '-']
+                wordSpotInnerTextLetters = wordSpotInnerText.split("")
+                // This replacing a dash with the chosen letter. But 
+                // not just any dash. It is replacing the element of
+                // the array that equals the current spot in this
+                // "for" loop. 
+                wordSpotInnerTextLetters[i] = chosenLetter
+                // Finally after all that work we get to update our webpage
+                // with the current letters and dashes so far guessed by
+                // our player
+                // So right now we are just changing it to "Ap-le"
+                // But if we set it to wordSpotInnerTextLetters
+                // it will be set to an array ["A", "p", "-", "-", "-"]
+                //
+                wordSpot.innerText = wordSpotInnerTextLetters.join("")
+
+                if (wordSpot.innerText == winningWord) {
+                    gameScore.innerText = "You Win!"
+                    // DESCRIBE IN YOUR OWN WORDS IN ENGLISH AS BEST YOU CAN
+
+                    // else if the number of guess exceeds the number of letters
+                    // in the given word - you loose buddy!
+
+                    //WHAT YOU NEED TO KNOW TO DO THE LINE ABOVE
+
+                    // find out how to track if the number of guesses is more 
+                    // than the number of letters in the word.
+                       // WHAT YOU NEED TO KNOW TO DO LINE ABOVE (we are breaking
+                       //it down further)
+
+                       // I got the number of gueess now I need to find out how 
+                       // to find out the number of letters in a word. 
+
+                    // PSUDO CODE FOR THE FIRST LINE AS BEST AS YOU CAN
+                    // BASED ON WHAT YOU HAVE SO FAR IN THE CODE
+
+                    // else if guessCounter > winningWord.length  
+                } 
+                    
+                }
+            }
+        };
+        
+
+    
+
+
+// TODO:
+
+//  - Figure out how to keep track of wins and losses
+//  - Figure out a way to keep track of how many gusses someone has made
+//  - Figure out how to keep track of how many times player has won and lost
+//  - Create text for when you loose (when you used up all your gusses)
+//  - 
+
+
+// Working on now:
+
+//  
+
+
+    
+    </script>
+</body>
+</html>
